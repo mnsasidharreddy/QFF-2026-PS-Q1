@@ -1,24 +1,20 @@
-"""Load and validate processor configuration JSON files."""
-from __future__ import annotations
 import json
 from pathlib import Path
 import networkx as nx
 
 def load_processor_config(path):
-    path = Path(path)
-    with path.open("r", encoding="utf-8") as f:
+    with Path(path).open(encoding="utf-8") as f:
         config = json.load(f)
-    required = {"name", "num_qubits", "coupling_map"}
-    missing = required - config.keys()
+    required = {"name","num_qubits","coupling_map","basis_gates"}
+    missing = required - set(config)
     if missing:
-        raise ValueError(f"{path} is missing required keys: {sorted(missing)}")
+        raise ValueError(f"Missing keys: {sorted(missing)}")
     n = int(config["num_qubits"])
-    edges = config["coupling_map"]
-    for edge in edges:
-        if len(edge) != 2 or any(not isinstance(q, int) or q < 0 or q >= n for q in edge):
-            raise ValueError(f"Invalid coupling edge {edge!r} for {n} qubits")
+    for edge in config["coupling_map"]:
+        if len(edge) != 2 or any(not isinstance(q,int) or q < 0 or q >= n for q in edge):
+            raise ValueError(f"Invalid coupling edge: {edge}")
     graph = nx.Graph()
     graph.add_nodes_from(range(n))
-    graph.add_edges_from(tuple(edge) for edge in edges)
+    graph.add_edges_from(map(tuple, config["coupling_map"]))
     config["graph"] = graph
     return config

@@ -1,24 +1,21 @@
-"""Problem formulation helpers for the biomedical signal classifier."""
-from __future__ import annotations
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
 
-def validate_features(features):
-    """Validate a 2-D numeric feature matrix (samples x features)."""
-    import numpy as np
-    array = np.asarray(features, dtype=float)
-    if array.ndim != 2:
-        raise ValueError("features must be a 2-D array: samples x features")
-    if array.shape[0] < 1 or array.shape[1] < 1:
-        raise ValueError("features must contain at least one sample and one feature")
-    if not np.isfinite(array).all():
-        raise ValueError("features contain NaN or infinite values")
-    return array
-
-def make_binary_labels(labels):
-    """Map labels to integers; currently intended for a binary classification task."""
-    import numpy as np
-    y = np.asarray(labels).reshape(-1)
-    unique = sorted(set(y.tolist()))
-    if len(unique) != 2:
-        raise ValueError(f"Expected exactly 2 classes; found {len(unique)}")
-    mapping = {label: i for i, label in enumerate(unique)}
-    return np.array([mapping[v] for v in y], dtype=int), mapping
+def make_dataset(random_state=42):
+    # Keep the make_classification parameters aligned with the earlier PS-Q1 brief.
+    X, y = make_classification(
+        n_samples=200,
+        n_features=4,
+        n_informative=3,
+        n_redundant=0,
+        random_state=random_state,
+    )
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=random_state, stratify=y
+    )
+    # Fit preprocessing only on training data to avoid leakage.
+    scaler = MinMaxScaler(feature_range=(-1, 1))
+    X_train = scaler.fit_transform(X_train)
+    X_test = scaler.transform(X_test)
+    return X_train, X_test, y_train.astype(int), y_test.astype(int), scaler
