@@ -57,6 +57,25 @@ Open `main.ipynb` in Jupyter and run cells from top to bottom.
 
 3) Comparing the coding results on Processor A and Processor B.
 
-4) Evaluation of classification accuracy, circuit depth, CX count, SWAP routing overhead, and noise impact.
+4) Evaluation of classification accuracy, circuit depth, CX count, SWAP routing overhead. Noise impact is not evaluated in the current experiment.
 
 5) The results, graphs, and final analysis in the results/ directory and report.md are saved.
+
+
+## Actual Measured Results
+Metric	| VQC |	Logistic regression
+Accuracy |	77.50% |	87.50%
+Precision |	86.67% |	89.47%
+Recall | 65.00%	| 85.00%
+F1 score |	74.29% | 87.18%
+
+## Processor A/B comparison
+Metric | Processor A | Processor B
+Circuit depth | 13 | 13
+Total gates | 38 | 38
+CX gates | 6 | 6
+SWAP gates | 0 | 0
+Physical qubits available | 5 | 9
+
+## Conclusion
+logistic regression outperformed the VQC on this test set and that both processors produced identical compiled circuit metrics for the tested circuit.
