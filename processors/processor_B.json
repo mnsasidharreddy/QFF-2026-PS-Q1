@@ -1,0 +1,41 @@
+{
+  "name": "Processor B",
+  "description": "ILLUSTRATIVE STARTER CONFIGURATION ONLY. Replace with the official participant-defined configuration.",
+  "num_qubits": 5,
+  "coupling_map": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      2,
+      4
+    ]
+  ],
+  "basis_gates": [
+    "rz",
+    "sx",
+    "x",
+    "cx"
+  ],
+  "single_qubit_error": null,
+  "two_qubit_error": null,
+  "readout_error": null,
+  "source": "placeholder - not official hardware data"
+}
