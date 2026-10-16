@@ -1,32 +1,25 @@
 # QFF 2026 PS-Q1 — Phase 1 Report
 
-## 1. Problem statement
-Describe the biomedical signal classification task, target labels, data source, and why the task matters. Do not include personal or sensitive patient information.
+## 1. Specification
+This implementation follows the earlier PS-Q1 brief: 200 synthetic samples, four features, binary classes, a four-qubit VQC, and an 80/20 split. The later consolidated guide describes an ECG/EEG version. Record organizer clarification here before final submission.
 
 ## 2. Dataset and preprocessing
-- Dataset/source:
-- Sample count:
-- Features:
-- Target classes:
-- Missing-value handling:
-- Normalization:
-- Train/validation/test split:
-- Random seed:
+Generator: `make_classification`; 200 samples; 4 features; 3 informative; 0 redundant; seed 42; stratified 80/20 split. `MinMaxScaler` is fit only on training data and maps features to [-1, 1].
 
-## 3. Model and experiment design
-Describe the classical baseline, variational circuit, encoding, ansatz, optimizer, loss, and evaluation metrics.
+## 3. Model
+Describe angle encoding, trainable rotations, entangling gates, measured output, loss, optimizer, and stopping criteria.
 
 ## 4. Processor A/B configurations
-Document the authoritative source for each coupling map, basis gates, qubit count, and noise parameters. The starter JSON files are illustrative placeholders until replaced with the official configurations.
+Document coupling maps, basis gates, transpiler settings, and authoritative specification source.
 
-## 5. Benchmark results
-Populate this section only after running experiments. Include depth, operation counts, CX/SWAP overhead, runtime where measured, and classification metrics. Distinguish simulated estimates from hardware measurements.
+## 5. Results
+Insert measured outputs from `results/tables/processor_comparison.csv`. Do not invent results.
 
-## 6. Analysis and trade-offs
-Explain how topology and routing affect circuit cost and any observed classification changes.
+## 6. Analysis
+Compare accuracy and loss; explain depth, CX, and SWAP differences. The same logical circuit/sample is compiled for A and B.
 
-## 7. Limitations and reproducibility
-List dataset limitations, simulator assumptions, package versions, seeds, and steps needed to reproduce the results.
+## 7. Limitations
+Training uses an ideal statevector. The current benchmark measures compiled circuit resources; it does not claim noisy A/B classification accuracy.
 
-## 8. Conclusion and next steps
-Summarize only findings supported by recorded experiments.
+## 8. Reproducibility and AI disclosure
+Record package versions, seeds, and execution steps. Follow the hackathon AI-use policy and disclose assistance if required.
